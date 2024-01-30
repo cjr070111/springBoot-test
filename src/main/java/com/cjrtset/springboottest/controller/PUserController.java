@@ -3,6 +3,7 @@ package com.cjrtset.springboottest.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cjrtset.springboottest.entity.Job;
 import com.cjrtset.springboottest.entity.PUser;
 import com.cjrtset.springboottest.service.PUserService;
 import com.cjrtset.springboottest.utiles.Result;
@@ -100,6 +101,32 @@ public class PUserController {
         return Result.success(pUserService.getList());
     }
 
+    /**
+     * 调用存储过程
+     * @return
+     */
+    @GetMapping("/getUsers/{id}")
+    public Result<List<PUser>> getList(@PathVariable Long id){
+        List<PUser> user = pUserService.getUser(id);
+        return Result.success(user);
+    }
 
+    /**
+     * 查询结果返回俩张表的数据
+     */
+    @GetMapping("/getUsersJob")
+    public Result<List<List<?>>> getUsersJob(){
+        List<List<?>> user = pUserService.getUsersJob();
+        return Result.success(user);
+    }
+
+    /**
+     * 有入参和有出参的存储过程
+     */
+    @PostMapping ("/insertAndCount")
+    public Result<Integer> getUsersJob(@Validated(Save.class) @RequestBody Job job){
+        Integer i =  pUserService.insertAndCount(job);
+        return Result.success(i);
+    }
 
 }

@@ -21,20 +21,20 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("p_user")
-public class PUser {
+public class PUser extends BaseEntity{
 
   @NotNull(message = "修改时id不能为空",groups = Update.class)   //一般通过id来修改
   private Long id;
 
-  private Date createdAt;
+  /*private Date createdAt;
 
   private Date updatedAt;
 
-  private Date deletedAt;
+  private Date deletedAt;*/
 
   private String mobile;
 
-  @Size(min = 5, max = 10, message = "请输入5-10个字符的用户名",groups ={Update.class, Save.class})
+  @Size(min = 1, max = 8, message = "请输入5-10个字符的用户名",groups ={Update.class, Save.class})
   @NotNull(message = "姓名不能为空",groups = Save.class)
   private String name;
 
@@ -53,8 +53,8 @@ public class PUser {
   /**
    * 如果是嵌套校验，需要加上Valid（只能是Valid，@Validated不支持嵌套校验）
    */
-  @Valid
-  @NotNull(groups = {Save.class, Update.class})
+  //@Valid
+  //@NotNull(groups = {Save.class, Update.class})
   @TableField(exist = false)
   private Job job;
 

@@ -23,4 +23,6 @@ public class Job {
         @NotNull(groups = {Save.class, Update.class})
         @Length(min = 2, max = 10, groups = {Save.class, Update.class})
         private String position;
+
+        private Integer result;
 }

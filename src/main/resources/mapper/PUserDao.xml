@@ -1,8 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
+
 <mapper namespace="com.cjrtset.springboottest.dao.PUserMapper">
+
+
+    
+    <resultMap id="resultMap1" type="com.cjrtset.springboottest.entity.PUser">
+        <id column="id" property="id"></id>
+        <result column="name" property="name"></result>
+        <result property="birthday" column="birthday"></result>
+        <result property="mobile" column="mobile"></result>
+        <result property="email" column="email"></result>
+        <result property="age" column="age"></result>
+        <result property="createdAt" column="created_at"></result>
+        <result property="updatedAt" column="updated_at"></result>
+        <result property="deletedAt" column="deleted_at"></result>
+    </resultMap>
+    <!--结果集2-->
+    <resultMap id="resultMap2" type="com.cjrtset.springboottest.entity.Job">
+        <id column="id" property="id"></id>
+        <result column="job_name" property="jobName"></result>
+        <result column="position" property="position"></result>
+    </resultMap>
+
+
+
     <select id="selList" resultType="com.cjrtset.springboottest.entity.PUser">
        select * from p_user
     </select>
+
+
+    <select id="getUsers" statementType="CALLABLE" resultMap="resultMap1,resultMap2">
+       call selUserById(#{id,mode=IN})
+    </select>
+
+    <select id="getUsersJob" statementType="CALLABLE" resultMap="resultMap1,resultMap2">
+        call selUser
+    </select>
+
+
+
+    <parameterMap id="map" type="java.util.Map">
+        <parameter property="id" mode="IN" jdbcType="INTEGER"></parameter>
+        <parameter property="jobName" mode="IN" jdbcType="VARCHAR"></parameter>
+        <parameter property="position" mode="IN" jdbcType="INTEGER"></parameter>
+        <parameter property="num" mode="OUT" jdbcType="INTEGER"></parameter>
+    </parameterMap>
+
+    <!--call insertAndSel(
+    #{id,mode=IN},
+    #{jobName,mode=IN},
+    #{position,mode=IN},
+    #{result, mode=OUT, jdbcType=INTEGER}
+    )-->
+    <select id="insertAndCount" statementType="CALLABLE" parameterMap="map"  resultType="java.lang.Integer">
+
+         call insertAndSel(?,?,?,?)
+    </select>
+
+
 </mapper>
